@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー紹介</title>
+    <link rel="stylesheet" href="/css/publicPage/publicUser.css">
+	<link rel="stylesheet" href="/css/publicPage/publicAsk.css">
+</head>
+
+<body>
+
+	<div th:replace="publicPage/publicAsk :: askModal"></div>
+	
+	<div class="top-bar">
+	    <div class="site-title">ユーザー紹介サイト</div>
+	    <div class="top-right">
+	        <button class="top-btn" onclick="openAskPopup()">お問い合わせ</button>
+	        <a class="top-btn" href="/login">ログイン</a>
+	    </div>
+	</div>
+
+	<div class="tab-container">
+	  <a href="/publicUsers" th:classappend="${activeTab == 'all'} ? 'active-tab'">一般ユーザー紹介</a>
+	  <a href="/publicUsers/monthly" th:classappend="${activeTab == 'monthly'} ? 'active-tab'">今月の人気ユーザー</a>
+	</div>
+
+	<div class="user-list">
+	    <div class="user-row" th:each="user, stat : ${generalUsers}">
+	        <div class="user-main">
+	            <img th:src="@{'/profile-images/' + ${user.profileImage}}" class="user-photo"/>
+	            <div class="user-text">
+					<div class="login-id" th:text="${user.loginId}"></div>
+					<div class="mail" th:text="${user.mail}"></div>
+	            </div>
+	        </div>
+
+	        <div class="status" th:text="${user.access == 1 ? 'アクセス許可' : 'アクセス禁止'}">アクセス許可</div>
+
+	        <div class="likes">
+	            <span th:id="'likes-' + ${user.loginId}" th:text="${user.likes}">0</span>
+	            <button class="like-btn" th:data-loginid="${user.loginId}" onclick="likeUser(this)">❤️</button>
+	        </div>
+
+			   <div class="detail">
+				<button class="detail-btn"
+				    th:attr="data-image=@{'/profile-images/' + ${user.profileImage}},
+				              data-name=${user.loginId},
+				              data-furigana=${user.furigana},
+				              data-gender=${user.gender},
+				              data-age=${user.age},
+				              data-intro=${user.introduction}"
+				    onclick="showDetailModal(this)">
+				    詳細
+				</button>
+			</div>
+		</div>	
+  　 </div>
+　</div>
+
+
+				<!-- 共通モーダル -->
+				<div id="detailModal" class="modal-overlay" style="display: none;">
+				    <div class="modal-content">
+				        <span class="close-btn" onclick="closeDetailModal()">&times;</span>
+				        <img id="modalImage" class="modal-image" src="" alt="プロフィール画像">
+						
+				<!--詳細画面のいいね-->
+						<div class="modal-name-wrapper">
+				        <div id="modalName" class="modal-name">名前</div>				
+						  <div class="modal-heart-group">
+						    <button id="modalLikeBtn" class="modal-heart" onclick="likeFromModal()">❤️</button>
+						    <span id="modalLikeCount" class="modal-like-count">24</span>
+						  </div>
+						</div>
+
+						
+							<div class="modal-subinfo-wrapper">
+								    <div class="modal-subinfo-box">
+								        <label>ふりがな：</label>
+								        <div id="modalFurigana">ふりがな</div>
+								    </div>
+								    <div class="modal-subinfo-box">
+								        <label>性別：</label>
+								        <div id="modalGender">性別</div>
+								    </div>
+								    <div class="modal-subinfo-box">
+								        <label>年齢：</label>
+								        <div id="modalAge">年齢</div>
+								    </div>
+								</div>
+
+								    <div id="modalIntro" class="modal-intro">自己紹介</div>
+						    </div>
+						</div>
+	<script src="/js/admin/likes.js"></script>
+	<script src="/js/publicAsk.js"></script>
+	<script src="/js/public.js"></script>
+	
+</body>
+</html>

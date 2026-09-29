@@ -1,0 +1,130 @@
+/* ベーススタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #ffe6f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+/* サイドバー */
+.sidebar {
+    width: 220px;
+    background: #ff99c8;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 100;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+/* サイドバーの開閉ボタン */
+.toggle-btn {
+    width: 80px; /* 明示的に幅を指定 */
+    height: 60px;
+    background: #ff6b9f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: -40px; /* サイドバーの幅に応じて微調整 */
+    font-size: 22px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.toggle-btn:hover {
+    background: #ff4b6f;
+}
+
+/* サイドバーのメニュー */
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+}
+
+.sidebar .menu-item {
+    margin-bottom: 20px;
+}
+
+.sidebar .menu-item a {
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    display: block;
+    padding: 5px 20px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.sidebar .menu-item a:hover {
+    background: #ff6b9f;
+}
+
+
+/* ログアウトボタンのスタイル */
+.sidebar .menu-item form {
+    display: inline;
+    width: 100%;;
+}
+
+.sidebar .menu-item input[type="submit"] {
+	
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 15px  !important;
+    display: block;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-align: left;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+/* ホバー時のスタイル */
+.sidebar .menu-item input[type="submit"]:hover {
+    background: #ff6b9f;
+}
+
+/* user名のスタイル */
+.text-left{
+	margin: 0;
+	position: absolute;  /* 絶対位置指定 */
+	top: 10px;           /* 上から10pxの位置 */
+	left: 10px;          /* 左から10pxの位置 */
+	font-weight: bold;   /* 文字を太くする（任意） */
+	font-size: 16px;     /* フォントサイズ調整（任意） */
+	color: white;        /* 文字色を白に（任意） */
+}
+
+
+/* サイドバーあり（開いているとき） */
+body.sidebar-open .container {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+}
+
+/* サイドバーなし（閉じているとき） */
+body.sidebar-closed .container {
+    width: 100%;
+}
+
+

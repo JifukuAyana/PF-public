@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランキング</title>
+    <link rel="stylesheet" href="css/admin/dash.css">
+	<link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body>
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+		<div th:replace="common/messageIcon :: messageIcon"></div>
+
+    <!-- ランキング表示 -->
+    <div class="ranking-container" id="ranking-container">
+        <div class="ranking-header">RANKING</div>
+        <div class="ranking-content">
+
+			<!-- 年間ランキング -->
+			<div class="ranking-section">
+			    <h3 class="ranking-title">年間ランキング</h3>
+			    <ul class="ranking-list">
+			        <li th:each="loginId, stat : ${yearlyLikeRanking}" class="ranking-item" th:classappend="${stat.index == 0} ? ' first'">
+			            <span class="rank-number" th:text="${stat.index + 1} + '位'"></span>
+			            <div class="rank-detail" th:text="${loginId}">ユーザーID</div>
+			        </li>
+			    </ul>
+			</div>
+
+			<!-- 月間ランキング -->
+			<div class="ranking-section">
+			    <h3 class="ranking-title">月間ランキング</h3>
+			    <ul class="ranking-list">
+			        <li th:each="loginId, stat : ${monthlyLikeRanking}" class="ranking-item" th:classappend="${stat.index == 0} ? ' first'">
+			            <span class="rank-number" th:text="${stat.index + 1} + '位'"></span>
+			            <div class="rank-detail" th:text="${loginId}">ユーザーID</div>
+			        </li>
+			    </ul>
+			</div>
+
+        </div>
+    </div>
+
+</body>
+</html>

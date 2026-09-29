@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント削除一覧</title>
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/admin/deleteList.css">
+</head>
+<body class="sidebar-open">
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+		<div th:replace="common/messageIcon :: messageIcon"></div>
+	
+   
+    <!-- メインコンテンツ -->
+    <div class="container" id="container">
+        <h1 class="header">アカウント削除一覧</h1>
+        <table class="account-table">
+            <thead>
+                <tr>
+                    <th>名前</th>
+                    <th>メールアドレス</th>
+                    <th>ステータス</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+			<tbody id="userTableBody">
+			    <tr th:each="user : ${deletedUsers}">
+			        <td th:text="${user.loginId}"></td>
+			        <td th:text="${user.mail}"></td>
+			        <td th:text="${user.deleted == 0 ? '有効' : '削除済み'}"></td>
+			        <td>
+			            <button class="action-btn restore-btn" th:attr="data-id=${user.loginId}" onclick="restoreAccount(this)">復元</button>
+			            <button class="action-btn delete-btn" th:attr="data-id=${user.loginId}" onclick="permanentlyDeleteAccount(this)">完全に削除</button>
+			        </td>
+			    </tr>
+			</tbody>
+        </table>
+		
+<!--		ページネーション-->
+		<div class="pagination-container">
+		    <div class="pagination" id="pagination"></div>
+		</div>
+		
+    </div>
+	
+    <script src="js/admin/deleteList.js"></script>
+	<script src="js/sidebar.js"></script>
+</body>
+</html>

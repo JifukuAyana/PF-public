@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!--Thymeleafを使えるようにする-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定</title>
+    <link rel="stylesheet" href="css/sidebar.css">
+	<link rel="stylesheet" th:href="@{/css/set.css}"> 
+</head>
+
+<body class="sidebar-open">
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+		<div th:replace="common/messageIcon :: messageIcon"></div>
+	
+    <!-- 情報変更フォーム -->
+    <div class="container">
+        <h1 class="header">設定</h1>
+		
+		<!-- アラート表示メッセージ -->
+		<div class="alert d-flex align-items-center"
+		     th:classappend="${isError} ? 'alert-danger' : 'alert-primary'"
+		     role="alert" th:if="${message != null}">
+		    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img">
+		        <use xlink:href="#exclamation-triangle-fill" th:if="${isError}" />
+		        <use xlink:href="#info-fill" th:unless="${isError}" />
+		    </svg>
+		    <span th:text="#{${message}}"></span>
+		</div>
+
+				
+		<form id="updateForm" class="form" th:object="${user}" th:action="@{/set/updateUser}" method="post">
+			<input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		    
+		    <!-- 名前 -->
+		    <div class="form-group">
+		        <label for="name">ユーザー名</label>
+		        <input type="text" id="name" th:field="*{loginId}" name="name" placeholder="ユーザー名を入力">
+				<span class="text-danger" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></span>
+		    </div>
+			
+		    <!-- メールアドレス -->
+		    <div class="form-group">
+		        <label for="email">メールアドレス</label>
+		        <input type="email" id="email" th:field="*{mail}" name="email" placeholder="メールアドレスを入力">
+				<span class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></span>
+		    </div>
+		    <!-- パスワード -->
+		    <div class="form-group">
+		        <label for="password">パスワード</label>
+				<input type="password" id="password" th:field="*{password}" name="password" placeholder="新しいパスワードを入力">
+				<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+				<span class="text-danger" th:if="${#fields.hasErrors('passwordLengthValid')}" th:errors="*{passwordLengthValid}"></span>
+				<span class="text-danger" th:if="${#fields.hasErrors('passwordFormatValid')}" th:errors="*{passwordFormatValid}"></span>
+			 </div>
+			
+		    <!-- 更新ボタン -->
+			<button type="submit" class="btn">更新</button> 
+		</form>
+    </div>
+	
+	<script src="js/sidebar.js"></script>
+	
+</body>
+</html>

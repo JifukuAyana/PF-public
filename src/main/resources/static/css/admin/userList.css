@@ -1,0 +1,364 @@
+/* コンテナ */
+.container {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    text-align: center;
+}
+
+/* サイドバーが閉じた場合 */
+.sidebar.collapsed + #container {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* ヘッダー */
+.header {
+    font-size: 35px;
+    font-weight: bold;
+    color: #808080;
+    text-align: center;
+	margin-bottom: 40px ;
+	margin-top: 20px ;
+}
+
+/* テーブル */
+.account-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-table th, .account-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.account-table th {
+    background: #f4f4f4;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+}
+
+.account-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.account-table tr:hover {
+    background: #f1f1f1;
+}
+
+/* ボタン */
+.action-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.edit-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #45a049;
+}
+
+.delete-btn {
+    background: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #e53935;
+}
+
+.status-btn {
+    background: #2196F3;
+    color: white;
+}
+
+.status-btn:hover {
+    background: #1e88e5;
+}
+
+
+.like-btn {
+  background: none;         /* 背景なし */
+  border: none;             /* 枠線なし */
+  font-size: 20px;          /* サイズ */
+  cursor: pointer;
+  padding: 4px;
+  color: #ff4081;           /* ピンク色のハート */
+  transition: transform 0.2s;
+}
+
+.like-btn:hover {
+  transform: scale(1.2);    /* ホバーで少し大きく */
+}
+
+
+/* ページネーション */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+	justify-content: center;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.pagination button.active {
+    background: #4CAF50;
+    color: white;
+}
+
+
+
+
+.edit-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 500px;
+}
+
+.hidden {
+  display: none;
+}
+
+.close-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+.modal {
+  display: none;
+  position: fixed  !important;
+  top: 50%  !important;
+  left: 50%  !important;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  max-width: 90%;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.show {
+  display: block;
+}
+
+
+/* ポップアップ見た目向上 */
+.modal {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* ヘッダーのスタイル */
+.modal h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 8px;
+}
+
+/* 入力フィールドスタイル */
+.modal input[type="text"],
+.modal input[type="email"],
+.modal input[type="password"],
+.modal select,
+.modal textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: border 0.3s;
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* ボタンのスタイル */
+.modal button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-right: 15px;
+  
+}
+
+.modal button:hover {
+  background-color: #45a049;
+}
+
+.close-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 15px 15px;
+  margin-top: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+}
+
+.radio-label {
+  display: inline-block;
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.radio-label.selected {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* フォームグループのデザイン */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* テキストエリアのカスタマイズ */
+.modal textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+#generalFields {
+  max-height: 400px; /* 必要に応じて高さを調整 */
+  overflow-y: auto;
+  padding-top: 10px;
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+
+/* プロフィール画像 */
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+
+.modal input[type="number"] {
+  -moz-appearance: textfield; /* Firefoxで上下の矢印を消す */
+  appearance: textfield;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: border 0.3s;
+}
+
+/* ChromeやEdgeの上下矢印を消す */
+.modal input[type="number"]::-webkit-outer-spin-button,
+.modal input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.modal input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  transition: border 0.3s;
+  cursor: pointer;
+}
+
+.modal input[type="file"]:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.modal .alert {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.modal {
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+

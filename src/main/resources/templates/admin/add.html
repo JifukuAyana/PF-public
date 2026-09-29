@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー登録</title>
+	<link rel="stylesheet" th:href="@{css/sidebar.css}">
+	<link rel="stylesheet" th:href="@{css/admin/add.css}">
+</head>
+
+<body class="sidebar-open">
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+	<div th:replace="common/messageIcon :: messageIcon"></div>
+	
+    <!-- メインコンテンツ -->
+    <div class="container" id="container">
+        <h1 class="header">ユーザー新規登録</h1>
+		
+		<!-- エラーメッセージ -->
+		 <div class="alert d-flex align-items-center" th:classappend="${isError ? 'alert-danger' : 'alert-primary'}"
+		     role="alert" th:if="${message != null}">
+		     <svg class="bi flex-shrink-0 me-2" width="24" height="24">
+		         <use xlink:href="#exclamation-triangle-fill" th:if="${isError}" />
+		         <use xlink:href="#info-fill" th:unless="${isError}" />
+		     </svg>
+		     <span th:text="${message}"></span>
+		 </div>
+
+		 <!-- 入力フォーム -->
+        <form id="userForm" 
+			th:action="@{/add}" 
+			method="post" 
+			th:object="${signupForm}" 
+			enctype="multipart/form-data">
+
+            <!-- ラジオボタン -->
+            <div class="form-group user-type-group">
+                <label>
+                    <input type="radio" th:field="*{authority}" value="1" checked onclick="toggleUserType()">
+                    <span class="radio-label">管理者</span>
+                </label>
+                <label>
+                    <input type="radio" th:field="*{authority}" value="2" onclick="toggleUserType()">
+                    <span class="radio-label">一般</span>
+                </label>
+            </div>
+
+
+			<!-- 共通項目 -->
+			           <div id="commonFields">
+			               <div class="form-group">
+			                   <label for="name">ユーザー名</label>
+			                   <input type="text" th:field="*{loginId}" placeholder="名前を入力">
+			                   <span class="text-danger" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></span>
+			               </div>
+
+			               <div class="form-group">
+			                   <label for="mail">メールアドレス</label>
+			                   <input text="email" th:field="*{mail}" placeholder="メールアドレスを入力">
+							<!-- 長さエラー -->
+			                   <span class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></span>
+							
+			               </div>
+
+			               <div class="form-group">
+			                   <label for="password">パスワード</label>
+			                   <input type="password" th:field="*{password}" placeholder="パスワードを入力">
+			                   <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+							<span class="text-danger" th:if="${#fields.hasErrors('passwordLengthValid')}" th:errors="*{passwordLengthValid}"></span>
+							<span class="text-danger" th:if="${#fields.hasErrors('passwordFormatValid')}" th:errors="*{passwordFormatValid}"></span>
+			               </div>
+
+			               <div class="form-group">
+			                   <label for="access">ステータス</label>
+			                   <select th:field="*{access}">
+			                       <option value="1">アクセス許可</option>
+			                       <option value="2">アクセス禁止</option>
+			                   </select>
+			                   <span class="text-danger" th:if="${#fields.hasErrors('access')}" th:errors="*{access}"></span>
+			               </div>
+			           </div>
+
+			           <!-- 一般ユーザー用 -->
+			           <div id="generalFields" style="display: none;">
+						<div class="form-group">
+						    <label for="profileImage">プロフィール画像</label>
+						    <input class="form-control" type="file" th:field="*{profileImage}">
+							<span class="text-danger" th:if="${#fields.hasErrors('profileImage')}" th:errors="*{profileImage}"></span>
+							<span class="text-danger"
+							      th:if="${#fields.hasErrors('profileImageSelected')}"
+							      th:errors="*{profileImageSelected}"></span>
+						</div>
+
+						
+						<div class="form-group">
+						    <label for="furigana">ふりがな</label>
+						    <input type="text" id="kana" th:field="*{furigana}" placeholder="ふりがなを入力">
+
+						    <!-- 未入力 -->
+						    <span class="text-danger" th:if="${#fields.hasErrors('furiganaRequired')}" th:errors="*{furiganaRequired}"></span>
+
+						    <!-- 形式エラー -->
+						    <span class="text-danger" th:if="${#fields.hasErrors('furiganaFormatValid')}" th:errors="*{furiganaFormatValid}"></span>
+
+						    <!-- 長さエラー（255超） -->
+						    <span class="text-danger" th:if="${#fields.hasErrors('furigana')}" th:errors="*{furigana}"></span>
+						</div>
+
+						
+			               <div class="form-group">
+			                   <label for="gender">性別</label>
+			                   <select th:field="*{gender}">
+			                       <option value="">選択してください</option>
+			                       <option value="1">男性</option>
+			                       <option value="2">女性</option>
+			                       <option value="3">その他</option>
+								   <option value="9">エラー用</option>
+			                   </select>
+							   <!-- Springのバインディングエラー（例: "HACKED"など） -->
+							   	<span class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+
+							   	<!-- @AssertTrue用のカスタムバリデーション -->
+							   	<span class="text-danger" th:if="${#fields.hasErrors('genderValid')}" th:errors="*{genderValid}"></span>
+			               </div>
+
+			               <div class="form-group">
+			                   <label for="age">年齢</label>
+			                   <input type="number" th:field="*{age}" placeholder="年齢を入力"min="0">
+							<span class="text-danger" th:if="${#fields.hasErrors('ageRequired')}" th:errors="*{ageRequired}"></span>
+						    <span class="text-danger" th:if="${#fields.hasErrors('ageValid')}" th:errors="*{ageValid}"></span>
+			               </div>
+
+			               <div class="form-group">
+			                   <label for="introduction">自己紹介</label>
+			                   <textarea th:field="*{introduction}" placeholder="自己紹介を入力"></textarea>
+							<span class="text-danger" th:if="${#fields.hasErrors('introductionRequired')}" th:errors="*{introductionRequired}"></span>
+							    <span class="text-danger" th:if="${#fields.hasErrors('introductionLengthValid')}" th:errors="*{introductionLengthValid}"></span>
+			               </div>
+			           </div>
+
+			           <!-- 登録ボタン -->
+			           <button type="submit" class="btn">登録</button>
+			       </form>
+    </div>
+
+	 <script src="js/signup.js"></script>
+	 <script src="js/sidebar.js"></script>
+</body>
+</html>

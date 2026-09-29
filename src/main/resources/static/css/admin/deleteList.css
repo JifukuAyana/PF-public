@@ -1,0 +1,119 @@
+/* ベーススタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* コンテナ */
+.container {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    text-align: center;
+}
+
+/* サイドバーが閉じた場合 */
+.sidebar.collapsed + #container {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* ヘッダー */
+.header {
+	  font-size: 35px ;
+	  margin-bottom: 40px ;
+	  margin-top: 20px ;
+	  text-align: center;    
+	  color: #808080 ;      
+	}
+
+/* テーブル */
+.account-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-table th, .account-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.account-table th {
+    background: #f4f4f4;
+    font-weight: bold;
+    color: #555;
+}
+
+.account-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.account-table tr:hover {
+    background: #f1f1f1;
+}
+
+/* ボタン */
+.action-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.delete-btn {
+    background: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #e53935;
+}
+
+.restore-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.restore-btn:hover {
+    background: #45a049;
+}
+
+
+/*ページネーション*/
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+}
+
+
+.page-btn {
+    margin: 0 5px;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.page-btn.active {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+	
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+     <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body>
+	<div th:insert="common/sourceList :: sourceList"></div>
+	<div th:replace="common/messageIcon :: messageIcon"></div>
+	
+    <div class="top-bar">
+      
+    </div>
+    <div class="login-container">
+        <h1>ログイン</h1>
+		<div class="alert alert-danger d-flex align-items-center" role="alert" th:if="${errorMsg} != null">
+		    <svg class="bi flex-shrink-0 me-2" width="24" height="24">
+		        <use xlink:href="#exclamation-triangle-fill" />
+		    </svg>
+			<div>
+				<span th:text="${errorMsg}"></span>  <!--コントローラーからエラーメッセージを受け取る-->
+			</div>
+		</div>
+		
+		<form id="loginForm" th:action="@{/login}" method="post" th:object="${loginForm}">
+		    
+		    <label for="loginId">ユーザー名</label>
+		    <input type="text" id="loginId" name="loginId" th:field="*{loginId}" placeholder="ユーザー名">
+		    <div id="loginIdError" class="text-danger"></div> <!-- エラーメッセージ表示用 -->
+
+		    <label for="password">パスワード</label>
+		    <input type="password" id="password" name="password" th:field="*{password}" placeholder="パスワード">
+		    <div id="passwordError" class="text-danger"></div> <!-- エラーメッセージ表示用 -->
+
+		    <button type="submit">ログイン</button>
+		</form>
+
+		
+		<a th:href="@{/signup}">▶ユーザー新規登録</a>
+		
+    </div>
+	
+	<script src="js/login.js"></script>
+	
+</body>
+</html >

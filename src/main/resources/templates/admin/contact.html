@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ一覧</title>
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/admin/contact.css">
+</head>
+
+<body class="sidebar-open">
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+		<div th:replace="common/messageIcon :: messageIcon"></div>
+	
+  <div class="container">
+    <h1>お問い合わせ一覧</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>カテゴリー</th>
+          <th>件名</th>
+          <th>本文</th>
+          <th>ステータス</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody id="inquiryTable">
+        <!-- データがここに表示されます -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- お問い合わせ詳細ポップアップ -->
+  <div id="detailContainer" class="detail-modal hidden">
+      <button class="close-btn" onclick="closeDetail()">×</button>
+      <h2>お問い合わせ詳細</h2>
+      <p id="detailCategory"></p>
+      <p id="detailSubject"></p>
+      <p id="detailText"></p>
+
+      <div class="status-change">
+          <label for="statusSelect">ステータス変更:</label>
+          <select id="statusSelect">
+              <option value="未対応">未対応</option>
+              <option value="対応中">対応中</option>
+              <option value="対応済み">対応済み</option>
+          </select>
+          <button id="statusUpdateBtn">更新</button>
+      </div>
+  </div>
+
+  <script src="js/admin/contact.js"></script>
+  <script src="js/sidebar.js"></script>
+</body>
+</html>

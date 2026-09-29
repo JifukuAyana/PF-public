@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カテゴリー＆お問い合わせ管理</title>
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/admin/category.css">
+</head>
+<body class="sidebar-open">
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+	<div th:replace="common/messageIcon :: messageIcon"></div>
+	
+  <div class="container">
+    <h1>カテゴリー一覧</h1>
+    <div class="add-category">
+      <input type="text" id="newCategory" placeholder="新規カテゴリー">
+      <button onclick="addCategory()">追加</button>
+    </div>
+    <div id="categoryContainer" class="category-grid"></div>
+  </div>
+
+  <div id="inquiryContainer" class="inquiry-modal hidden">
+    <h2>お問い合わせ一覧</h2>
+    <ul id="inquiryList"></ul>
+    <button class="close-btn" onclick="closeInquiries()">×</button>
+  </div>
+  
+  <!-- カテゴリー編集モーダル -->
+  <div id="editCategoryModal" class="inquiry-modal hidden">
+    <h2 style="position: relative;">
+      カテゴリー編集
+      <button class="modal-close-square" onclick="closeEditCategoryModal()">×</button>
+	  <div id="editCategoryMessage" class="edit-category-message"></div>
+    </h2>
+    <input type="text" id="editCategoryName" placeholder="カテゴリー名を入力">
+    <input type="hidden" id="editCategoryId">
+    <div style="margin-top: 20px;">
+      <button class="status-btn" onclick="submitCategoryUpdate()">更新</button>
+    </div>
+  </div>
+  
+  <script src="js/admin/category.js"></script>
+  <script src="js/sidebar.js"></script>
+  
+</body>
+</html>

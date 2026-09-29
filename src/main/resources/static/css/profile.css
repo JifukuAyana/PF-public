@@ -1,0 +1,119 @@
+/* ベーススタイル */
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin-top: 15%;
+	margin-bottom: 20%;
+    padding: 0;
+    display: flex;
+    height: auto;
+}
+
+
+/* コンテナ */
+.container {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    height: auto;
+    display: flex;
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    padding: 40px; /* 余白を多めに確保 */
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* フォームコンテナ */
+.form-container {
+    width: 100%;
+    max-width: 600px; /* フォームの最大幅を調整 */
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* ヘッダー */
+.header {
+	  font-size: 35px ;
+	  margin-bottom: 20px ;
+	  margin-top: 20px ;
+	  text-align: center;    
+	  color: #808080 ;      
+	}
+
+/* フォーム */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.error {
+    color: #f44336;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+/* ボタン */
+.btn {
+    width: 170px !important;
+    padding: 12px !important;
+    background: #4CAF50 !important;
+    color: white !important;
+    border-radius: 5px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+}
+
+.btn:hover {
+    background: #45a049 !important;
+}
+
+/* サイドバーが閉じた場合 */
+.sidebar.collapsed + .container {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* 画像*/
+.profile-img-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 10px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.profile-img-preview:hover {
+    transform: scale(1.05);
+}

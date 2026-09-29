@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	
+<!--signup画面だけ「ログイン画面へ」の表示にする。-->
+<div th:fragment="header">
+    <li class="menu-item">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit"
+                   th:value="${isSignupPage} ? 'ログイン画面へ' : 'ログアウト'" />
+        </form>
+    </li>
+</div>
+
+</body>
+</html>

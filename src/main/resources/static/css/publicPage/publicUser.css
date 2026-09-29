@@ -1,0 +1,337 @@
+/* 共通ベース */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  background: #f4f6fa;
+  margin: 0;
+  padding: 0;
+  padding-top: 80px;
+}
+
+/* 上部バー */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #e0e7ff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.site-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.top-btn {
+  background-color: #3f51b5;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  margin-left: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.top-btn:hover {
+  background-color: #303f9f;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+}
+
+/* タブ */
+.tab-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px 0;
+}
+
+.tab-container a {
+  text-decoration: none;
+  padding: 10px 30px;
+  margin: 0 10px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: 2px solid #ccc;
+  color: #333;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.tab-container a:hover {
+  background-color: #e0e0e0;
+}
+
+.tab-container .active-tab {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+}
+
+/* 月セレクト */
+.month-selector-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.month-label {
+  font-weight: bold;
+  color: #444;
+  font-size: 16px;
+}
+
+.month-select {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.month-select:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+
+/* ユーザーリスト */
+.user-list {
+  max-width: 960px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.rank {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  width: 50px;
+}
+
+.user-main {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  min-width: 240px;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.user-text .login-id {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-text .mail {
+  font-size: 14px;
+  color: #777;
+}
+
+.status {
+  font-size: 14px;
+  color: #333;
+  min-width: 100px;
+  text-align: center;
+}
+
+.likes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.likes span {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.like-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ff4081;
+  transition: transform 0.2s;
+}
+
+.like-btn:hover {
+  transform: scale(1.3);
+}
+
+.detail .detail-btn {
+  padding: 6px 10px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.detail .detail-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* モーダル */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 15px auto;
+  display: block;
+}
+
+.modal-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 10px auto 20px auto;
+}
+
+/* モーダルの詳細情報 */
+.modal-subinfo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 60px;
+  width: 100%;
+}
+
+.modal-subinfo-box {
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  color: #444;
+  margin: 6px 0;
+  width: 300px;
+}
+
+.modal-subinfo-box label {
+  font-weight: bold;
+  width: 100px;
+  text-align: right;
+  margin-right: 8px;
+}
+
+.modal-subinfo-box div {
+  flex: 1;
+  text-align: left;
+}
+
+.modal-intro {
+  font-size: 15px;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  color: #555;
+  white-space: pre-wrap;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+/*詳細画面のいいね*/
+.modal-name-wrapper {
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: center;     /* 中央寄せ */
+  margin-top: 12px;
+  gap: 6px;
+}
+
+.modal-heart-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.modal-heart {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.modal-like-count {
+  font-size: 16px;
+}
+
+.like-btn, .modal-heart {
+  transition: transform 0.2s ease-in-out;
+}
+
+.like-btn:hover, .modal-heart:hover {
+  transform: scale(1.3); /* 1.3倍に拡大 */
+}
+
+

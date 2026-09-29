@@ -1,0 +1,35 @@
+<!-- sidebar.html -->
+<div th:fragment="sidebar">
+    <div class="sidebar" id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <ul class="menu">
+            <span class="text-left" th:text="'ログインID：' + ${#authentication.principal.username}"></span>
+
+            <!-- 一般 -->
+			<th:block th:if="${hasUserManageAuth != true}">
+				<li class="menu-item"><a href="dashboard">TOP</a></li>
+                <li class="menu-item"><a href="ask">お問い合わせ</a></li>
+            </th:block>
+
+            <!-- 管理者 -->
+            <th:block th:if="${hasUserManageAuth}">
+				<li class="menu-item"><a href="dash">TOP</a></li>
+                <li class="menu-item"><a href="add">新規登録</a></li>
+                <li class="menu-item"><a href="userList">アカウント一覧</a></li>
+                <li class="menu-item"><a href="deleteList">アカウント削除一覧</a></li>
+                <li class="menu-item"><a href="category">カテゴリ一覧</a></li>
+                <li class="menu-item"><a href="contact">問い合わせ一覧</a></li>
+            </th:block>
+			
+			<!-- 共通 -->
+			<li class="menu-item"><a href="set">設定</a></li>
+			<li class="menu-item"><a href="profile">プロフィール</a></li>
+
+            <!-- その他 -->
+            <div th:insert="~{common/sourceList :: sourceList}"></div>
+            <div th:replace="~{common/header :: header}"></div>
+        </ul>
+    </div>
+
+     <script src="/js/admin/dash.js"></script> 
+</div>

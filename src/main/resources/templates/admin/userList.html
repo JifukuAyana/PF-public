@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント一覧</title>
+	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+	<link rel="stylesheet" th:href="@{/css/admin/userList.css}">
+</head>
+<body th:attrappend="data-show-edit-modal=${showEditModal}" class="sidebar-open">
+
+    <div th:replace="~{sidebar :: sidebar}"></div>
+    <div th:replace="common/messageIcon :: messageIcon"></div>
+
+    <div class="container" id="container">
+        <h1 class="header">アカウント一覧</h1>
+        <table class="account-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>名前</th>
+                    <th>メールアドレス</th>
+                    <th>ステータス</th>
+                    <th>操作</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}" th:attr="data-loginid=${user.loginId}">
+                    <td>
+                        <img th:if="${user.profileImage != null and !#strings.isEmpty(user.profileImage)}"
+                             th:src="@{'/profile-images/' + ${user.profileImage} + '?v=' + ${#dates.createNow().time}}"
+                             alt="プロフィール画像" class="profile-image" />
+                        <img th:if="${user.profileImage == null or #strings.isEmpty(user.profileImage)}"
+                             th:src="@{/profile-images/default.jpg}"
+                             alt="デフォルト画像" class="profile-image" />
+                    </td>
+                    <td th:text="${user.loginId}"></td>
+                    <td th:text="${user.mail}"></td>
+                    <td th:text="${user.access == 1 ? 'アクセス許可' : 'アクセス禁止'}"></td>
+                    <td>
+						<button class="action-btn edit-btn" data-loginid="[[${user.loginId}]]" onclick="openEditModal(this)">編集</button>
+                        <button class="action-btn delete-btn">削除</button>
+                        <button class="action-btn status-btn">ステータス切替</button>
+                    </td>
+                    <td>
+                        <span th:id="'likes-' + ${user.loginId}" th:text="${user.likes}">0</span>
+                        <button class="like-btn" th:data-loginid="${user.loginId}" onclick="likeUser(this)">❤️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination-container">
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <div id="editUserModal" class="modal">
+	<div id="modalOverlay" class="modal">
+        <h2>ユーザー情報編集</h2>
+
+		<!-- エラーメッセージ -->
+		     <div class="alert d-flex align-items-center" th:classappend="${isError ? 'alert-danger' : 'alert-primary'}"
+		         role="alert" th:if="${message != null}">
+		         <svg class="bi flex-shrink-0 me-2" width="24" height="24">
+		             <use xlink:href="#exclamation-triangle-fill" th:if="${isError}" />
+		             <use xlink:href="#info-fill" th:unless="${isError}" />
+		         </svg>
+				 <span th:text="${message}"></span>
+		     </div>
+
+			 <!-- 入力フォーム -->
+			 <form id="editUserForm"
+			       th:action="@{/userList}"
+			       method="post"
+			       th:object="${userEditForm}"
+			       enctype="multipart/form-data">
+
+			<!-- ラジオボタン -->
+            <div class="form-group user-type-group">
+                <label>
+                    <input type="radio" th:field="*{authority}" value="1"  id="adminRadio" checked onclick="toggleUserType()">
+                    <span class="radio-label">管理者</span>
+                </label>
+                <label>
+                    <input type="radio" th:field="*{authority}" value="2"  id="generalRadio" onclick="toggleUserType()">
+                    <span class="radio-label">一般</span>
+                </label>
+            </div>
+
+			<!-- 共通項目 -->
+			<div id="commonFields">
+			    <div class="form-group">
+			        <label for="name">ユーザー名</label>
+					<input type="text" id="editName" th:field="*{loginId}" placeholder="ユーザー名を入力">
+					<input type="hidden" th:field="*{originalLoginId}" id="originalLoginId">
+					<span class="text-danger" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></span>
+			    </div>
+
+			    <div class="form-group">
+			        <label for="mail">メールアドレス</label>
+			        <input text="email" type="email" id="editEmail" th:field="*{mail}" placeholder="メールアドレスを入力">
+					<!-- 長さエラー -->
+			        <span class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></span>
+					
+			    </div>
+
+			    <div class="form-group">
+			        <label for="password">パスワード</label>
+			        <input type="password" th:field="*{password}" placeholder="パスワードを入力">
+			        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+					<span class="text-danger" th:if="${#fields.hasErrors('passwordLengthValid')}" th:errors="*{passwordLengthValid}"></span>
+					<span class="text-danger" th:if="${#fields.hasErrors('passwordFormatValid')}" th:errors="*{passwordFormatValid}"></span>
+			    </div>
+
+			    <div class="form-group">
+			        <label for="access">ステータス</label>
+			        <select  id="editStatus"  th:field="*{access}">
+			            <option value="1">アクセス許可</option>
+			            <option value="2">アクセス禁止</option>
+			        </select>
+			        <span class="text-danger" th:if="${#fields.hasErrors('access')}" th:errors="*{access}"></span>
+			    </div>
+			</div>
+
+			<!-- 一般ユーザー用 -->
+			<div id="generalFields" style="display: none;">
+				<div class="form-group">
+				    <label for="profileImage">プロフィール画像</label>
+				    <input class="form-control" type="file" th:field="*{profileImage}">
+					<span class="text-danger" th:if="${#fields.hasErrors('profileImage')}" th:errors="*{profileImage}"></span>
+<!--					<span class="text-danger"-->
+<!--					      th:if="${#fields.hasErrors('profileImageSelected')}"-->
+<!--					      th:errors="*{profileImageSelected}"></span>-->
+				</div>
+
+				
+				<div class="form-group">
+				    <label for="furigana">ふりがな</label>
+				    <input type="text" id="furigana" th:field="*{furigana}" placeholder="ふりがなを入力">
+
+				    <!-- 未入力 -->
+<!--				    <span class="text-danger" th:if="${#fields.hasErrors('furiganaRequired')}" th:errors="*{furiganaRequired}"></span>-->
+
+				    <!-- 形式エラー -->
+				    <span class="text-danger" th:if="${#fields.hasErrors('furiganaFormatValid')}" th:errors="*{furiganaFormatValid}"></span>
+
+				    <!-- 長さエラー（255超） -->
+					<span class="text-danger" th:if="${#fields.hasErrors('furigana')}" th:errors="*{furigana}"></span>
+				</div>
+
+				
+			    <div class="form-group">
+			        <label for="gender">性別</label>
+			        <select id="gender" th:field="*{gender}">
+			            <option value="">選択してください</option>
+			            <option value="1">男性</option>
+			            <option value="2">女性</option>
+			            <option value="3">その他</option>
+						<option value="9">エラー用</option>
+			        </select>
+					<span class="text-danger" th:if="${#fields.hasErrors('genderValid')}" th:errors="*{genderValid}"></span>					
+			    </div>
+
+			    <div class="form-group">
+			        <label for="age">年齢</label>
+			        <input type="number" th:field="*{age}"id="age" placeholder="年齢を入力">
+<!--					<span class="text-danger" th:if="${#fields.hasErrors('ageRequired')}" th:errors="*{ageRequired}"></span>-->
+				    <span class="text-danger" th:if="${#fields.hasErrors('ageValid')}" th:errors="*{ageValid}"></span>
+			    </div>
+
+			    <div class="form-group">
+			        <label for="introduction">自己紹介</label>
+			        <textarea th:field="*{introduction}"id="introduction" placeholder="自己紹介を入力"></textarea>
+<!--					<span class="text-danger" th:if="${#fields.hasErrors('introductionRequired')}" th:errors="*{introductionRequired}"></span>-->
+					    <span class="text-danger" th:if="${#fields.hasErrors('introductionLengthValid')}" th:errors="*{introductionLengthValid}"></span>
+			    </div>
+			</div>
+
+            <button type="button" class="btn" onclick="saveEdit()">更新</button>
+            <button type="button" class="btn close-btn" onclick="closeEditModal()">閉じる</button>
+        </form>
+    </div>
+
+	
+	<script src="js/admin/userList.js"></script>
+	<script src="js/sidebar.js"></script>
+	<script src="js/admin/likes.js"></script>
+	
+	
+
+</body>
+</html>

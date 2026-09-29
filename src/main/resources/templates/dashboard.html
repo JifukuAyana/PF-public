@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>マイいいね数</title>
+	<link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="/css/admin/dash.css">
+</head>
+<body class="sidebar-open">
+	
+	<div th:replace="~{sidebar :: sidebar}"></div>
+		<div th:replace="common/messageIcon :: messageIcon"></div>
+
+
+    <div class="ranking-container" id="ranking-container">
+        <div class="ranking-header">マイいいね集計</div>
+        <div class="ranking-content">
+
+			<div class="ranking-section">
+			    <h3 class="ranking-title">年間のいいね数</h3>
+			    <div class="ranking-item">
+			        <div class="rank-detail" th:text="${yearlyLikes} + ' 件'">0 件</div>
+			    </div>
+			</div>
+
+			<div class="ranking-section">
+			    <h3 class="ranking-title">月間のいいね数</h3>
+			    <div class="ranking-item">
+			        <div class="rank-detail" th:text="${monthlyLikes} + ' 件'">0 件</div>
+			    </div>
+			</div>
+
+        </div>
+    </div>
+
+    <script src="/js/admin/dash.js"></script>
+</body>
+</html>

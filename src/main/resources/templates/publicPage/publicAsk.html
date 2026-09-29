@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div th:fragment="askModal">
+	  <div id="askModal" class="modal">
+	    <div class="modal-content">
+	      <span class="close" onclick="closeAskPopup()">&times;</span>
+	      <h2>お問い合わせフォーム</h2>
+
+	      <!-- メッセージ表示 -->
+	      <div id="askMessage" class="success" style="display: none;"></div>
+	      <div th:if="${error}" class="error" th:text="${error}"></div>
+
+		  <form id="popupAskForm" th:action="@{/publicUsers/ask}" method="post" th:object="${askForm}">
+		    
+		    <select name="category" th:field="*{category}" required>
+		      <option value="">選択してください</option>
+		      <option th:each="cat : ${categoryList}" th:value="${cat.name}" th:text="${cat.name}"></option>
+		    </select>
+			
+			 <input type="email" name="email" th:field="*{email}" placeholder="メールアドレス" required>
+		    <input type="text" name="subject" th:field="*{subject}" placeholder="件名" required>
+		    <textarea name="message" th:field="*{message}" placeholder="本文" required></textarea>
+		    <button type="submit">送信</button>
+		  </form>
+
+		  
+	    </div>
+	  </div>
+	</div>
+
+  
+</body>
+</html>
